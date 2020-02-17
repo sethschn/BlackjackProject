@@ -6,19 +6,17 @@ import java.util.List;
 import com.skilldistillery.blackjack.cards.Card;
 
 public class BlackjackHand extends Hand {
-	private List<Card> listHand;
 	private String name;
 
 	public BlackjackHand(String name) {
 		super();
-		listHand = this.getCards();
 		this.name = name;
 	}
 
 	@Override
 	public int getHandValue() {
 		//super.getCards();
-		return super.getTotalValue();
+		return this.getTotalValue();
 	}
 
 	public boolean isBlackjack() {
@@ -49,6 +47,6 @@ public class BlackjackHand extends Hand {
 
 	@Override
 	public String toString() {
-		return "Hand " + listHand + ", \nValue: " + getHandValue() + ".\n";
+		return "Hand " + this.getCards() + ", \nValue: " + getHandValue() + ".\n";
 	}
 }

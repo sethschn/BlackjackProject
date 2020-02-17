@@ -8,7 +8,7 @@ public class BlackjackPlayer extends Player {
 	private BlackjackHand hand;
 	
 	public BlackjackPlayer() {
-		//hand = new BlackjackHand();
+		hand = new BlackjackHand("Player");
 	}
 	
 	

@@ -15,17 +15,17 @@ public class BlackjackApp {
 	public Deck deckObj;
 	public BlackjackPlayer playerObj;
 	public BlackjackDealer dealerObj;
-	public BlackjackHand playerHand;
-	public BlackjackHand dealerHand;
+	//public BlackjackHand playerHand;
+	//public BlackjackHand dealerHand;
 
 	public BlackjackApp() {
 		kb = new Scanner(System.in);
 		playerObj = new BlackjackPlayer();
-		playerHand = new BlackjackHand("Player");
+		//playerHand = new BlackjackHand("Player");
 		deckObj = new Deck();
 		deckObj.shuffle(); // start with a shuffled deck
-		dealerObj = new BlackjackDealer(deckObj);
-		dealerHand = new BlackjackHand("Dealer");
+		dealerObj = new BlackjackDealer();
+		//dealerHand = new BlackjackHand("Dealer");
 
 	}
 
@@ -48,19 +48,13 @@ public class BlackjackApp {
 		//System.out.println();
 		if (userInput.equalsIgnoreCase("Y") && error == false) {
 			// deal player a card
-			playerHand.addCard(deckObj.dealCard());
-			//deckObj.dealCard(playerHand);
+			playerObj.hit(getCard());
 			// deal the dealer a card
-			dealerHand.addCard(getCard());
+			dealerObj.hit(getCard());
 			// deal player a card
-			playerHand.addCard(getCard());
-			// deal the dealer a card
-			//dealerHand.addCardToHand(getCard());
-			//playerObj.setHand(playerHand);
+			playerObj.hit(getCard());
 			showPlayerHand();
-			//dealerObj.setHand(dealerHand);
 			showDealerHand();
-			//kb.nextLine();
 			hitOrStayMenu();				
 		}else {
 			run();
@@ -68,7 +62,7 @@ public class BlackjackApp {
 	}// end run
 	
 	public void hitOrStayMenu() {
-		checkGameOver(playerHand);
+		checkGameOver(playerObj.getHand());
 		int choice = 0;
 		boolean error = false;
 		System.out.println("\nWould you like to ");
@@ -86,22 +80,20 @@ public class BlackjackApp {
 			System.out.println("Invalid input");
 			error = true;
 			kb.nextLine();
-			//hitOrStayMenu();
 		}
 		if (!error) {		
 			switch (choice) {
 			case 1:
 				// hit
-				playerHand.addCard(getCard());
+				playerObj.hit(getCard());
 				showPlayerHand();
-				//showDealerHand();
-				checkGameOver(playerHand); 
+				checkGameOver(playerObj.getHand()); 
 				hitOrStayMenu();					
 				break;
 			case 2:
 				// stay
 				System.out.println("\t\tDealers turn");
-				dealerHand.addCard(getCard());
+				dealerObj.hit(getCard());
 				dealerTurn();
 				break;
 			}			
@@ -112,8 +104,10 @@ public class BlackjackApp {
 	
 	public void reset() {
 		System.out.println("\n");
-		playerHand = new BlackjackHand("Player");
-		dealerHand = new BlackjackHand("Dealer");
+		playerObj = new BlackjackPlayer();
+		dealerObj = new BlackjackDealer();
+		//playerHand = new BlackjackHand("Player");
+		//dealerHand = new BlackjackHand("Dealer");
 		deckObj = new Deck();
 		deckObj.shuffle();
 		kb = new Scanner(System.in);
@@ -122,11 +116,11 @@ public class BlackjackApp {
 	
 	public void dealerTurn() {
 		showDealerHand();
-		while (dealerHand.getHandValue() < 17 ) {
+		while (playerObj.getHand().getHandValue() < 17 ) {
 			//System.out.println("Dealer total: "+dealerHand.getHandValue());
-			dealerHand.addCard(getCard());
+			dealerObj.hit(getCard());
 			showDealerHand();
-			checkGameOver(dealerHand);
+			checkGameOver(dealerObj.getHand());
 		}
 		//showPlayerHand();
 		checkFinalGameOver();
@@ -138,15 +132,15 @@ public class BlackjackApp {
 		System.out.println("\n\t\tFinal Scores");
 		showPlayerHand();
 		showDealerHand();
-		int dealerValue = dealerHand.getHandValue();
-		int playerValue = playerHand.getHandValue();
-		if (dealerHand.isBust()) {
+		int dealerValue = dealerObj.getHand().getHandValue();
+		int playerValue = playerObj.getHand().getHandValue();
+		if (dealerObj.getHand().isBust()) {
 			System.out.println("Player wins, dealer busted");
-		}else if (playerHand.isBust()) {
+		}else if (playerObj.getHand().isBust()) {
 			System.out.println("Dealer wins, player busted");
 		}
 		if (dealerValue > playerValue && dealerValue <= 21 ) {
-			if (dealerHand.isBlackjack()) {
+			if (dealerObj.getHand().isBlackjack()) {
 				System.out.println("Dealer has blackjack, player loses");
 			}else {
 				System.out.println("Dealer wins higher value than player");				
@@ -154,7 +148,7 @@ public class BlackjackApp {
 		}else if (dealerValue == playerValue) {
 			System.out.println("Tie Game");
 		}else if (playerValue > dealerValue && playerValue <= 21){
-			if (playerHand.isBlackjack()) {
+			if (playerObj.getHand().isBlackjack()) {
 				System.out.println("Player has blackjack, dealer loses");								
 			}else {
 				System.out.println("Player wins higher value than dealer");				
@@ -180,11 +174,11 @@ public class BlackjackApp {
 	}// end getCard()
 	
 	public void showPlayerHand() {
-		System.out.println("Player "+playerHand);
+		System.out.println("Player "+playerObj.getHand());
 	}
 	
 	public void showDealerHand() {
-		System.out.println("Dealer "+dealerHand);
+		System.out.println("Dealer "+dealerObj.getHand());
 	}
 
 }// end class
