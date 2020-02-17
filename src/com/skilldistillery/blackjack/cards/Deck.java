@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.skilldistillery.blackjack.hand.Hand;
+
 public class Deck {
 	private List<Card> cardList;
 
@@ -23,6 +25,10 @@ public class Deck {
 	
 	public Card dealCard() {
 		return cardList.remove(0);
+	}
+	
+	public void dealCard(Hand hand) {
+		hand.addCard(cardList.remove(0));
 	}
 	
 	public void shuffle() {
