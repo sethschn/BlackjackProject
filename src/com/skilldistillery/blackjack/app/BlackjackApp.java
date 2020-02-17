@@ -116,7 +116,7 @@ public class BlackjackApp {
 	
 	public void dealerTurn() {
 		showDealerHand();
-		while (playerObj.getHand().getHandValue() < 17 ) {
+		while (dealerObj.getHand().getHandValue() < 17 ) {
 			//System.out.println("Dealer total: "+dealerHand.getHandValue());
 			dealerObj.hit(getCard());
 			showDealerHand();
