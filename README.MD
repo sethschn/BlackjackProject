@@ -12,8 +12,8 @@ This application is a functional command line blackjack game. The application is
 
 ###### Lessons Learned
 
-*I learned how to build classes in an object oriented manner.
-*I learned to build classes whose fields are objects.
-*I practiced writing methods.
-*I learned how to use collections to organize data.
-*I learned how to implement some game logic for black jack.
+* I learned how to build classes in an object oriented manner.
+* I learned to build classes whose fields are objects.
+* I practiced writing methods.
+* I learned how to use collections to organize data.
+* I learned how to implement some game logic for black jack.
